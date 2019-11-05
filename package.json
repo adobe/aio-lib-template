@@ -1,8 +1,8 @@
 {
-  "name": "@{{REPO}}",
+  "name": "@adobe/aio-lib-template",
   "version": "0.0.1",
   "description": "Adobe I/O Lib",
-  "repository": "https://github.com/{{REPO}}/",
+  "repository": "https://github.com/adobe/aio-lib-template/",
   "license": "Apache-2.0",
   "main": "src/index.js",
   "scripts": {

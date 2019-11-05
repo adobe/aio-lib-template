@@ -1,7 +1,3 @@
 {
-  "plugins": ["jest"],
-  "extends": ["standard", "plugin:jest/recommended"],
-    "parserOptions": {
-    "ecmaVersion": 2018
-  }  
+  "extends": ["@adobe/eslint-config-aio-lib-config"]
 }

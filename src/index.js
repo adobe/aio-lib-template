@@ -48,7 +48,7 @@ class LibNameCoreAPI {
    * @param {string} tenantId the tenant id
    * @param {string} apiKey the API key for your integration
    * @param {string} accessToken the access token for your integration
-   * @returns {LibNameCoreAPI}
+   * @returns {Promise<LibNameCoreAPI>}
    */
   async init (tenantId, apiKey, accessToken) {
     // init swagger client

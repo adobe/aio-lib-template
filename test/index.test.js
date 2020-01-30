@@ -109,11 +109,11 @@ test('getSomething', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'mytag.getSomething',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_SOMETHING
-  })
+  })).not.toThrow()
 })

@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,7 +12,15 @@ governing permissions and limitations under the License.
 const loggerNamespace = '@{{REPO}}'
 const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
 
-/** Reduce an Error to a string */
+/* global Request, Response */ // for linter
+
+/**
+ * Reduce an Error to a string
+ *
+ * @private
+ * @param {Error} error the Error object to reduce
+ * @returns {string} string reduced from an Error
+ */
 function reduceError (error = {}) {
   const response = error.response
   if (response) {
@@ -24,6 +32,13 @@ function reduceError (error = {}) {
   return error
 }
 
+/**
+ * Create request options for openapi client
+ *
+ * @private
+ * @param {object} parameters object
+ * @returns {object}  options request options
+ */
 function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
   return {
     requestBody: body,
@@ -36,11 +51,25 @@ function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
   }
 }
 
+/**
+ * A request interceptor that logs the request
+ *
+ * @private
+ * @param {Request} req the request object
+ * @returns {Request} the request object
+ */
 function requestInterceptor (req) {
   logger.debug(`REQUEST:\n ${JSON.stringify(req, null, 2)}`)
   return req
 }
 
+/**
+ * A request interceptor that logs the request
+ *
+ * @private
+ * @param {Response} res the response object
+ * @returns {Response} the response object
+ */
 function responseInterceptor (res) {
   logger.debug(`RESPONSE:\n ${JSON.stringify(res, null, 2)}`)
   if (res.ok) {

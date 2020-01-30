@@ -67,6 +67,7 @@ test('sdk init test - no accessToken', async () => {
   )
 })
 
+/** @private */
 async function standardTest ({
   fullyQualifiedApiName, apiParameters, apiOptions,
   sdkFunctionName, sdkArgs,

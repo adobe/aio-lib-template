@@ -16,6 +16,8 @@ const messages = new Map()
 
 /**
  * Create an Updater for the Error wrapper
+ *
+ * @ignore
  */
 const Updater = createUpdater(
   // object that stores the error classes (to be exported)
@@ -26,6 +28,8 @@ const Updater = createUpdater(
 
 /**
  * Provides a wrapper to easily create classes of a certain name, and values
+ *
+ * @ignore
  */
 const E = ErrorWrapper(
   // The class name for your SDK Error. Your Error objects will be these objects

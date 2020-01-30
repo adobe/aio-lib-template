@@ -11,7 +11,9 @@
     "lint": "eslint src test",
     "unit-tests": "jest --config test/jest.config.js --maxWorkers=2",
     "e2e": "jest --config e2e/jest.config.js",
-    "generate-docs": "jsdoc2md -t ./docs/readme_template.md ./src/index.js > README.md"
+    "typings": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/*.js -d .",
+    "jsdoc": "jsdoc2md -t ./docs/readme_template.md src/**/*.js > README.md",
+    "generate-docs": "npm run typings && npm run jsdoc"
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
@@ -20,7 +22,8 @@
     "swagger-client": "^3.9.0"
   },
   "devDependencies": {
-    "@adobe/eslint-config-aio-lib-config": "^1.0.1",
+    "@adobe/eslint-config-aio-lib-config": "^1.1.0",
+    "@types/node-fetch": "^2.5.4",
     "babel-runtime": "^6.26.0",
     "codecov": "^3.5.0",
     "dotenv": "^8.1.0",
@@ -29,6 +32,7 @@
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.7.2",
+    "eslint-plugin-jsdoc": "^21.0.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -39,6 +43,7 @@
     "jsdoc": "^3.6.3",
     "jsdoc-to-markdown": "^5.0.0",
     "openapi-schema-validator": "^3.0.3",
-    "stdout-stderr": "^0.1.9"
+    "stdout-stderr": "^0.1.9",
+    "tsd-jsdoc": "^2.4.0"
   }
 }

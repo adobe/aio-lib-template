@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -8,11 +8,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-/**
- * {{LIB_NAME}} SDK
- */
-
-'use strict'
 
 const Swagger = require('swagger-client')
 const loggerNamespace = '@{{REPO}}'
@@ -20,6 +15,17 @@ const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: 
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
 
+require('./types.jsdoc') // for VS Code autocomplete
+/* global MyParameters, Response */ // for linter
+
+/**
+ * Returns a Promise that resolves with a new LibNameCoreAPI object.
+ *
+ * @param {string} tenantId the tenant id
+ * @param {string} apiKey the API key for your integration
+ * @param {string} accessToken the access token for your integration
+ * @returns {Promise<LibNameCoreAPI>} a Promise with a LibNameCoreAPI object
+ */
 function init (tenantId, apiKey, accessToken) {
   return new Promise((resolve, reject) => {
     const clientWrapper = new LibNameCoreAPI()
@@ -37,10 +43,10 @@ function init (tenantId, apiKey, accessToken) {
 }
 
 /**
-* This class provides methods to call your {{LIB_NAME}} APIs.
-* Before calling any method initialize the instance by calling the `init` method on it
-* with valid values for tenantId, apiKey and accessToken
-*/
+ * This class provides methods to call your {{LIB_NAME}} APIs.
+ * Before calling any method initialize the instance by calling the `init` method on it
+ * with valid values for tenantId, apiKey and accessToken
+ */
 class LibNameCoreAPI {
   /**
    * Initializes a LibNameCoreAPI object and returns it.
@@ -48,7 +54,7 @@ class LibNameCoreAPI {
    * @param {string} tenantId the tenant id
    * @param {string} apiKey the API key for your integration
    * @param {string} accessToken the access token for your integration
-   * @returns {Promise<LibNameCoreAPI>}
+   * @returns {Promise<LibNameCoreAPI>} a LibNameCoreAPI object
    */
   async init (tenantId, apiKey, accessToken) {
     // init swagger client
@@ -77,12 +83,27 @@ class LibNameCoreAPI {
       throw new codes.ERROR_SDK_INITIALIZATION({ sdkDetails, messageValues: `${initErrors.join(', ')}` })
     }
 
-    /** the tenant id */
+    /**
+     * The tenant id
+     *
+     * @type {string}
+     */
     this.tenantId = tenantId
-    /** the api key from your integration */
+
+    /**
+     * The api key from your integration
+     *
+     * @type {string}
+     */
     this.apiKey = apiKey
-    /** the access token from your integration */
+
+    /**
+     * The access token from your integration
+     *
+     * @type {string}
+     */
     this.accessToken = accessToken
+
     return this
   }
 
@@ -98,7 +119,8 @@ class LibNameCoreAPI {
   /**
    * Get something.
    *
-   * @param {Object} [parameters={}] parameters to pass
+   * @param {MyParameters} [parameters={}] parameters to pass
+   * @returns {Promise<Response>} the response
    */
   getSomething (parameters = {}) {
     const sdkDetails = { parameters }

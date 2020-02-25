@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const { responseBodyToString, requestToString, reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
 
 test('reduceError', () => {
   // no args produces empty object
@@ -64,13 +64,49 @@ test('requestInterceptor', () => {
   expect(requestInterceptor(req)).toEqual(req)
 })
 
-test('responseInterceptor', () => {
+test('responseInterceptor', async () => {
+  const res = {}
+  expect(await responseInterceptor(res)).toEqual(res)
+})
+
+test('responseBodyToString', async () => {
+  const body = 'body contents'
   let res
 
-  res = { ok: true, text: '{}' }
-  expect(responseInterceptor(res)).toEqual(res)
-  res = { ok: false, text: '{}' }
-  expect(responseInterceptor(res)).toEqual(res)
-  res = { ok: true, text: '{ malformed' }
-  expect(responseInterceptor(res)).toEqual(res)
+  res = new fetch.Response(body)
+  await expect(responseBodyToString(res)).resolves.toEqual(body)
+
+  // error coverage
+  res = { text: () => {} }
+  await expect(responseBodyToString(res)).rejects.toEqual('TypeError: response.clone is not a function')
+})
+
+test('requestToString', async () => {
+  const url = 'http://foo.bar'
+  let req, headers
+
+  // no headers
+  headers = {}
+  req = {
+    method: 'GET',
+    headers,
+    url
+  }
+  await expect(requestToString(req)).toEqual(JSON.stringify(req, null, 2))
+
+  // has headers
+  headers = new Map()
+  headers.set('Content-Type', 'application/json')
+  req = {
+    method: 'GET',
+    headers,
+    url
+  }
+  const result = Object.assign({}, req, { headers: { 'Content-Type': 'application/json' } })
+  await expect(requestToString(req)).toEqual(JSON.stringify(result, null, 2))
+
+  // error coverage
+  const error = new Error('foo')
+  req = { headers: { forEach: () => { throw error } } }
+  await expect(requestToString(req)).toEqual(error.toString())
 })

@@ -52,38 +52,94 @@ function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
 }
 
 /**
- * A request interceptor that logs the request
+ * Converts a fetch Response object's body contents to a string.
  *
- * @private
- * @param {Request} req the request object
- * @returns {Request} the request object
+ * @param {Response} response the response object
+ * @returns {Promise<string>} a Promise that resolves to the converted object's body contents
  */
-function requestInterceptor (req) {
-  logger.debug(`REQUEST:\n ${JSON.stringify(req, null, 2)}`)
-  return req
+async function responseBodyToString (response) {
+  try {
+    // work with differences in the Response object processed by swagger vs straight fetch
+    if (typeof response.text === 'function') {
+      const _res = response.clone() // work around 'body already consumed' issues
+      return _res.text()
+    } else {
+      return response.text
+    }
+  } catch (error) {
+    return Promise.reject(error.toString())
+  }
+}
+
+/**
+ * Filters a json object, removing any undefined or null entries.
+ * Returns a new object (does not mutate original)
+ *
+ * @param {object} json the json object to filter
+ * @returns {object} the filtered object (a new object)
+ */
+function filterUndefinedOrNull (json) {
+  return Object.entries(json).reduce((accum, [key, value]) => {
+    if (value == null) { // undefined or null
+      return accum
+    } else {
+      return { ...accum, [key]: value }
+    }
+  }, {})
+}
+
+/**
+ * Converts a fetch Request object to a string.
+ *
+ * @param {Request} request the request object
+ * @returns {object} the converted object
+ */
+function requestToString (request) {
+  try {
+    const { method, headers, url, credentials, body } = request
+    const json = { method, headers, url, credentials, body }
+
+    // work with differences in the Request object processed by swagger vs straight fetch
+    if (request.headers && request.headers.forEach && typeof request.headers.forEach === 'function') {
+      json.headers = {}
+      request.headers.forEach((value, key) => {
+        json.headers[key] = value
+      })
+    }
+
+    return JSON.stringify(filterUndefinedOrNull(json), null, 2)
+  } catch (error) {
+    return error.toString()
+  }
 }
 
 /**
  * A request interceptor that logs the request
  *
  * @private
- * @param {Response} res the response object
+ * @param {Request} request the request object
+ * @returns {Request} the request object
+ */
+function requestInterceptor (request) {
+  logger.debug(`REQUEST:\n ${requestToString(request)}`)
+  return request
+}
+
+/**
+ * A request interceptor that logs the request
+ *
+ * @private
+ * @param {Response} response the response object
  * @returns {Response} the response object
  */
-function responseInterceptor (res) {
-  logger.debug(`RESPONSE:\n ${JSON.stringify(res, null, 2)}`)
-  if (res.ok) {
-    const text = res.text.toString('utf-8')
-    try {
-      logger.debug(`DATA\n, ${JSON.stringify(JSON.parse(text), null, 2)}`)
-    } catch (e) {
-      logger.debug(`DATA\n ${text}`)
-    }
-  }
-  return res
+async function responseInterceptor (response) {
+  logger.debug(`RESPONSE:\n ${await responseBodyToString(response)}`)
+  return response
 }
 
 module.exports = {
+  responseBodyToString,
+  requestToString,
   createRequestOptions,
   requestInterceptor,
   responseInterceptor,

@@ -22,7 +22,7 @@
     "swagger-client": "^3.9.0"
   },
   "devDependencies": {
-    "@adobe/eslint-config-aio-lib-config": "^1.1.0",
+    "@adobe/eslint-config-aio-lib-config": "^1.2.0",
     "@types/node-fetch": "^2.5.4",
     "babel-runtime": "^6.26.0",
     "codecov": "^3.5.0",
@@ -45,5 +45,8 @@
     "openapi-schema-validator": "^3.0.3",
     "stdout-stderr": "^0.1.9",
     "tsd-jsdoc": "^2.4.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }

@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 const sdk = require('../src')
-const fetch = require('node-fetch')
+const fetch = require('cross-fetch')
 const { createRequestOptions } = require('../src/helpers')
 const { codes } = require('../src/SDKErrors')
 

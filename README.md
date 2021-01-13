@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 # aio-lib-template
 
+This template is used by this [tool](https://github.com/adobe/create-aio-lib)
+
 To update this README.md, run:
 ```
 npm install

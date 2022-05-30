@@ -11,4 +11,4 @@ governing permissions and limitations under the License.
 
 const fetch = require('jest-fetch-mock')
 
-jest.setMock('cross-fetch', fetch)
+jest.setMock('node-fetch', fetch)

@@ -42,7 +42,7 @@
     "jest-junit": "^15.0.0",
     "jest-plugin-fs": "^2.9.0",
     "jsdoc": "^3.6.3",
-    "jsdoc-to-markdown": "^7.1.1",
+    "jsdoc-to-markdown": "^8.0.0",
     "openapi-schema-validator": "^12.1.0",
     "stdout-stderr": "^0.1.9",
     "tsd-jsdoc": "^2.4.0",

@@ -47,8 +47,5 @@
     "stdout-stderr": "^0.1.9",
     "tsd-jsdoc": "^2.4.0",
     "typescript": "^5.1.6"
-  },
-  "engines": {
-    "node": ">=18"
   }
 }

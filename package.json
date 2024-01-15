@@ -16,7 +16,7 @@
     "generate-docs": "npm run typings && npm run jsdoc"
   },
   "dependencies": {
-    "@adobe/aio-lib-core-errors": "^3.0.0",
+    "@adobe/aio-lib-core-errors": "^4.0.0",
     "@adobe/aio-lib-core-logging": "^2.0.0",
     "node-fetch": "^2.6.7",
     "swagger-client": "^3.18.5"

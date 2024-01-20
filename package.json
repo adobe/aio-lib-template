@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aio-lib-template",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Adobe I/O Lib",
   "repository": "https://github.com/adobe/aio-lib-template/",
   "license": "Apache-2.0",
@@ -50,5 +50,5 @@
   },
   "engines": {
     "node": ">=8.3.0"
-  }  
+  }
 }

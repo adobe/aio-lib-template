@@ -22,7 +22,7 @@
     "swagger-client": "^3.18.5"
   },
   "devDependencies": {
-    "@adobe/eslint-config-aio-lib-config": "^2.0.1",
+    "@adobe/eslint-config-aio-lib-config": "^3.0.2",
     "@types/node-fetch": "^2.6.1",
     "babel-runtime": "^6.26.0",
     "codecov": "^3.5.0",
